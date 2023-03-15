@@ -62,7 +62,6 @@ export class CodeBlockProcessor {
       title: yaml.title,
       description: yaml.description,
       host: yaml.host,
-      favicon: yaml.favicon,
       image: yaml.image,
       indent,
     };
@@ -109,12 +108,13 @@ export class CodeBlockProcessor {
     hostEl.addClass("auto-card-link-host");
     mainEl.appendChild(hostEl);
 
-    if (data.favicon) {
+    if (data.host) {
       const faviconEl = document.createElement("img");
       faviconEl.addClass("auto-card-link-favicon");
-      if (data.favicon) {
-        faviconEl.setAttr("src", data.favicon);
-      }
+      faviconEl.setAttr(
+        "src",
+        `https://icons.duckduckgo.com/ip3/${data.host}.ico`
+      );
       faviconEl.setAttr("width", 14);
       faviconEl.setAttr("height", 14);
       faviconEl.setAttr("alt", "");
@@ -127,18 +127,16 @@ export class CodeBlockProcessor {
     }
     hostEl.appendChild(hostNameEl);
 
-    const thumbnailEl = document.createElement("div");
-    thumbnailEl.addClass("auto-card-link-thumbnail");
-    cardEl.appendChild(thumbnailEl);
-
-    const thumbnailImgEl = document.createElement("img");
-    thumbnailImgEl.addClass("auto-card-link-thumbnail-img");
     if (data.image) {
+      const thumbnailEl = document.createElement("div");
+      thumbnailEl.addClass("auto-card-link-thumbnail");
+      cardEl.appendChild(thumbnailEl);
+      const thumbnailImgEl = document.createElement("img");
+      thumbnailImgEl.addClass("auto-card-link-thumbnail-img");
       thumbnailImgEl.setAttr("src", data.image);
+      thumbnailImgEl.setAttr("alt", "");
+      thumbnailEl.appendChild(thumbnailImgEl);
     }
-    thumbnailImgEl.setAttr("alt", "");
-    thumbnailEl.appendChild(thumbnailImgEl);
-
     return containerEl;
   }
 }

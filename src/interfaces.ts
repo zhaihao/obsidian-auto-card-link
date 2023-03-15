@@ -3,7 +3,6 @@ export interface LinkMetadata {
   title: string;
   description?: string;
   host?: string;
-  favicon?: string;
   image?: string;
   indent: number;
 }

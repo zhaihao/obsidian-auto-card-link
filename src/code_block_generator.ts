@@ -27,9 +27,9 @@ export class CodeBlockGenerator {
     const start = text.indexOf(fetchingText);
 
     if (start < 0) {
-      console.log(
-        `Unable to find text "${fetchingText}" in current editor, bailing out; link ${url}`
-      );
+      // console.log(
+      //   `Unable to find text "${fetchingText}" in current editor, bailing out; link ${url}`
+      // );
       return;
     }
 
@@ -48,14 +48,24 @@ export class CodeBlockGenerator {
 
   genCodeBlock(linkMetadata: LinkMetadata): string {
     const codeBlockTexts = ["\n```cardlink"];
+    console.log(linkMetadata);
     codeBlockTexts.push(`url: ${linkMetadata.url}`);
     codeBlockTexts.push(`title: "${linkMetadata.title}"`);
     if (linkMetadata.description)
       codeBlockTexts.push(`description: "${linkMetadata.description}"`);
     if (linkMetadata.host) codeBlockTexts.push(`host: ${linkMetadata.host}`);
-    if (linkMetadata.favicon)
-      codeBlockTexts.push(`favicon: ${linkMetadata.favicon}`);
-    if (linkMetadata.image) codeBlockTexts.push(`image: ${linkMetadata.image}`);
+    const p = linkMetadata.url.indexOf("://");
+    const protocol = linkMetadata.url.substring(0, p);
+
+    if (linkMetadata.image) {
+      let realImage: string = linkMetadata.image;
+      if (linkMetadata.image.startsWith("app://")) {
+        // app://common.abc.com/logo.svg
+        realImage = protocol + realImage.substring(3);
+      }
+
+      codeBlockTexts.push(`image: ${realImage}`);
+    }
     codeBlockTexts.push("```\n");
     return codeBlockTexts.join("\n");
   }

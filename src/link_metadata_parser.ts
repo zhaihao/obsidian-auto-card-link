@@ -32,7 +32,6 @@ export class LinkMetadataParser {
       title: title,
       description: description,
       host: hostname,
-      favicon: favicon,
       image: image,
       indent: 0,
     };
@@ -61,16 +60,28 @@ export class LinkMetadataParser {
   }
 
   private getFavicon(): string | undefined {
-    const favicon = this.htmlDoc
+    let favicon = this.htmlDoc
       .querySelector("link[rel='icon']")
       ?.getAttr("href");
+    if (!favicon) {
+      favicon = this.htmlDoc
+        .querySelector("link[rel='shortcut icon']")
+        ?.getAttr("href");
+    }
+
     if (favicon) return favicon;
   }
 
   private getImage(): string | undefined {
-    const ogImage = this.htmlDoc
+    let ogImage = this.htmlDoc
       .querySelector("meta[property='og:image']")
       ?.getAttr("content");
-    if (ogImage) return ogImage;
+
+    if (!ogImage) {
+      ogImage = this.htmlDoc.querySelector("img")?.src;
+    }
+
+    if (ogImage == null) ogImage = undefined;
+    return ogImage;
   }
 }

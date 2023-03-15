@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "node esbuild.config.js",
-    "build": "tsc -noEmit && node esbuild.config.js production",
+    "build": "tsc -noEmit && node esbuild.config.js production && cp styles.css main.js manifest.json '/Users/zhaihao/Documents/ORISON/.obsidian/plugins/auto-card-link'",
     "lint": "tsc --noEmit && eslint . --ext .ts",
     "fix": "eslint . --fix --ext .ts",
     "version": "node version-bump.js && git add manifest.json versions.json"

@@ -85,8 +85,8 @@ export default class ObsidianAutoCardLink extends Plugin {
       return;
     }
 
-    console.log(clipboardText);
-    console.log(CheckIf.isUrl(clipboardText));
+    // console.log(clipboardText);
+    // console.log(CheckIf.isUrl(clipboardText));
 
     // If not URL, just paste
     if (!CheckIf.isUrl(clipboardText) || CheckIf.isImage(clipboardText)) {
